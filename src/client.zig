@@ -13,11 +13,11 @@ pub const AuthorizationModel = struct {
     id: []const u8,
 };
 
-fn Owned(comptime T: type) type {
+pub fn Owned(comptime T: type) type {
     return struct {
         value: T,
         arena: *std.heap.ArenaAllocator,
-        fn deinit(self: *@This()) void {
+        pub fn deinit(self: *@This()) void {
             const arena = self.arena;
             const allocator = arena.child_allocator;
             arena.deinit();
@@ -51,7 +51,7 @@ pub const Client = struct {
     }
 
     // openapi ref https://docs.fga.dev/api/service
-    fn stores(self: *@This()) !Owned([]const Store) {
+    pub fn stores(self: *@This()) !Owned([]const Store) {
         const parsed = try self.get(struct { stores: []const Store }, "/stores");
         return Owned([]const Store){
             .value = parsed.value.stores,
@@ -65,7 +65,7 @@ pub const Client = struct {
         continuation_token: ?[]const u8 = null,
     };
 
-    fn authorizationModels(self: *@This(), options: ListStoreOptions) !Owned([]const AuthorizationModel) {
+    pub fn authorizationModels(self: *@This(), options: ListStoreOptions) !Owned([]const AuthorizationModel) {
         const path = try std.fmt.allocPrint(
             self.allocator,
             "/stores/{s}/authorization-models",
