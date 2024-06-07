@@ -3,7 +3,7 @@ start:
         -p 3000:3000 openfga/openfga run
 
 create-test-store:
-    curl  http://localhost:8080/stores --json '{"name": "FGA Demo Store"}'
+    curl http://localhost:8080/stores --json '{"name": "FGA Demo Store"}'
 
 list-stores:
-    curl  http://localhost:8080/stores
+    curl http://localhost:8080/stores
