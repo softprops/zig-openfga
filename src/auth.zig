@@ -20,7 +20,7 @@ pub const Credentials = union(enum) {
     client_credentials: ClientCredentials,
 
     pub fn format(self: @This(), comptime _: []const u8, _: std.fmt.FormatOptions, writer: anytype) !void {
-        // don't log credential info
+        // don't log senstive credential info
         _ = try writer.write(@tagName(self));
     }
 
